@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VideoData.cs" />
+    <Compile Include="VideoDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VideoItem.cs" />
+    <Compile Include="VideoListDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VideoBrowser.Itf\VideoBrowser.Itf.csproj">

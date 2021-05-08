@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IVideoData.cs" />
+    <Compile Include="IVideoDataBuilder.cs" />
+    <Compile Include="IVideoListDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IVideoItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

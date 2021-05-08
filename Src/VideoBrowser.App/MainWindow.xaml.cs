@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,70 +15,71 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VideoBrowser.Client;
+using VideoBrowser.Itf;
 
 namespace VideoBrowser.App
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public List<VideoItem> VideoList { get; set; }
+        #region Fields
+        private IVideoDataBuilder m_VideoDataBuilder = new VideoDataBuilder();
+        private IVideoData CurrentVideoData { get; set; }
+        private IList<IVideoItem> VideoList { get; set; }
+        #endregion Fields
 
+        #region Public
         public MainWindow()
         {
             InitializeComponent();
-            LoadListItems();
-        }
-
-        //load list to the ListBox
-        private void LoadListItems()
-        {
-            VideoList = new List<VideoItem>();
-            VideoList = CreateVideoList();
-            ListBoxConverter.ItemsSource = VideoList;
             this.ListBoxConverter.DataContext = this;
         }
 
-        //creating sample item list
-        private List<VideoItem> CreateVideoList()
+        #endregion Public
+
+        #region Buttons
+        private async void LoadButton(object sender, RoutedEventArgs args)
         {
-            for (int i = 1; i < 26; i++)
+            if(CurrentVideoData != null)
             {
-                VideoList.Add(
-                    new VideoItem()
-                    {
-                        VideoId = i,
-                        VideoTitle = "Video Title  " + i,
-                        VideoDetail = "Video Detail  " + i
-                    });
+                CurrentVideoData.VideoListDetails.PageingState = EPageingState.Reload;
             }
-            return VideoList;
+            CurrentVideoData =  await m_VideoDataBuilder.BuildList(CurrentVideoData);
+            VideoList = CurrentVideoData.VideoItems;
+            PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
+            ListBoxConverter.ItemsSource = VideoList;
         }
-    }
 
-    public class VideoItem
-    {
-        public int VideoId { get; set; }
-        public string VideoTitle { get; set; }
-        public string VideoDetail { get; set; }
-    }
-
-    public class VideoImageConverter : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        private async void NextButton(object sender, RoutedEventArgs args)
         {
-            return
-                File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\" + value.ToString() + ".png") ?
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\" + value.ToString() + ".png" :
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\video_missing.jpeg";
+            if(CurrentVideoData != null)
+            {
+                CurrentVideoData.VideoListDetails.PageingState = EPageingState.Next;
+                CurrentVideoData = await m_VideoDataBuilder.BuildList(CurrentVideoData);
+                VideoList = CurrentVideoData.VideoItems;
+                PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
+                ListBoxConverter.ItemsSource = VideoList;
+            }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        private async void PreviousButton(object sender, RoutedEventArgs args)
         {
-            //TODO
-            return null;
+            if (CurrentVideoData != null)
+            {
+                CurrentVideoData.VideoListDetails.PageingState = EPageingState.Previous;
+                CurrentVideoData = await m_VideoDataBuilder.BuildList(CurrentVideoData);
+                VideoList = CurrentVideoData.VideoItems;
+                PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
+                ListBoxConverter.ItemsSource = VideoList;
+            }
         }
+        #endregion Buttons
+
+        #region Private
+        private void LoadListItems()
+        {
+
+        }
+        #endregion Private
     }
 }

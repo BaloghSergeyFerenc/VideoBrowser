@@ -43,7 +43,7 @@
 
         <!--MENU-->
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource MenuPanel}">
-            <Button Style="{StaticResource LoadButton}">Load</Button>
+            <Button Style="{StaticResource LoadButton}" Click="LoadButton">Load</Button>
             <ComboBox Style="{StaticResource FilterCombobox}">
                 <ComboBoxItem IsSelected="True">All</ComboBoxItem>
                 <ComboBoxItem>Some</ComboBoxItem>
@@ -53,9 +53,9 @@
 
         <!--PAGER-->
         <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource PagerPanel}">
-            <Button Style="{StaticResource PagerButton}">Previous</Button>
-            <TextBlock Style="{StaticResource PagerInfo}">1 / 200</TextBlock>
-            <Button Style="{StaticResource PagerButton}">Next</Button>
+            <Button Style="{StaticResource PagerButton}" Click="PreviousButton">Previous</Button>
+            <TextBlock Name="PagerInfoText" Style="{StaticResource PagerInfo}">0 / 0</TextBlock>
+            <Button Style="{StaticResource PagerButton}" Click="NextButton">Next</Button>
         </StackPanel>
 
         <!--VIDEO LIST-->
