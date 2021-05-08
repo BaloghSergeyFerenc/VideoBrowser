@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoBrowser.App"
         mc:Ignorable="d"
-        Title="Video Browser" Height="450" Width="800">
+        Title="Video Browser" Height="900" Width="1200">
+
+    <!--WINDOW-->
+    <Window.Resources>
+        <local:VideoImageConverter x:Key="VideoImageConverter"/>
+        <DataTemplate x:Key="DataTemplateItemConverter">
+            <Canvas Width="650" Height="110">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding VideoId,Converter={StaticResource VideoImageConverter}}" Name="ImageName" Height="100" Width="100" Canvas.Left="10" Canvas.Top="10"></Image>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding VideoTitle}" Canvas.Left="150" Canvas.Top="5" Width="500" Margin="30,0,0,0"/>
+                        <TextBlock Text="{Binding VideoDetail}" Canvas.Left="150" Canvas.Top="25" Width="500" Margin="30,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Canvas>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
-        
+        <!--LAYOUT-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="25*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.Column="1" Background="#5558ed" />
+        <Border Grid.Row="1" Grid.Column="0" Background="#bec7a7" />
+
+        <!--LOGO-->
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Image Source="./VbaIcon.png" Height="40" Width="110" />
+        </StackPanel>
+
+        <!--MENU-->
+        <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource MenuPanel}">
+            <Button Style="{StaticResource LoadButton}">Load</Button>
+            <ComboBox Style="{StaticResource FilterCombobox}">
+                <ComboBoxItem IsSelected="True">All</ComboBoxItem>
+                <ComboBoxItem>Some</ComboBoxItem>
+                <ComboBoxItem>Any</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        <!--PAGER-->
+        <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource PagerPanel}">
+            <Button Style="{StaticResource PagerButton}">Previous</Button>
+            <TextBlock Style="{StaticResource PagerInfo}">1 / 200</TextBlock>
+            <Button Style="{StaticResource PagerButton}">Next</Button>
+        </StackPanel>
+
+        <!--VIDEO LIST-->
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Grid Height="Auto" MaxHeight="800" MaxWidth="800" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox x:Name="ListBoxConverter" ItemTemplate="{DynamicResource DataTemplateItemConverter}" ItemsSource="{Binding VideoList}" IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left" Margin="42,31,35,35"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

@@ -29,4 +29,21 @@ There is four module in Application
 
 ### VideoBrowser.App
 
-This module is responsible for the UI logic and the necessary Startup logic.
+This module is responsible for the UI logic, UI definitions and the necessary Startup logic.
+
+## Detailed Design
+
+### VideoBrowser.App
+
+General UI style defined in *App.xaml* file, and all style used as *StaticResource*. The MainWindow specific UI description (e.g. layout, custom view, list etc.) can be found in *MainWindow.xaml* Used UI elements and user controls are the nexts:
+
+- Unified Butttons with key *BasicButton*, and custom styled *LoadButton* and *PagerButton* [Link](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles)
+- TextBlock for Info about Paging State with key *PageInfo* [Link](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview?view=netdesktop-5.0)
+- Combobox for Filter has key *FilterComboBox*
+- Two Panel style are defined, one for Vertical panel with key *MenuPanel* and one for the Horizontal panel of pager controls with key *PagerPanel*
+- Layout defined in *MainWindows.xaml* [Link](https://docs.microsoft.com/en-us/windows/uwp/design/layout/grid-tutorial)
+- Scrollable Video list is also defined in *MainWindow.xaml* [Link](https://www.iranthajayasekara.com/blog/display-images-in-a-wpf-listbox.html)
+
+<img width="600" src="./img/UI_sample.png">
+
+
