@@ -2,7 +2,7 @@
 {
     public interface IVideoItem
     {
-        int VideoId { get; }
+        string VideoId { get; }
         string VideoTitle { get; }
         string VideoDetail { get; }
     }

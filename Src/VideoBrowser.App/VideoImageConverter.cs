@@ -11,9 +11,9 @@ namespace VideoBrowser.App
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\" + value.ToString() + ".png") ?
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\" + value.ToString() + ".png" :
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\images\\video_missing.jpeg";
+                File.Exists(Path.GetTempPath() + "\\DocklerVideoBrowser\\" + value.ToString()) ?
+                Path.GetTempPath() + "\\DocklerVideoBrowser\\" + value.ToString() :
+                Path.GetTempPath() + "\\DocklerVideoBrowser\\video_missing.jpeg";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

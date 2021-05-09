@@ -4,7 +4,7 @@ namespace VideoBrowser.Client.Data
 {
     class VideoItem : IVideoItem
     {
-        public int VideoId { get; set; }
+        public string VideoId { get; set; }
         public string VideoTitle { get; set; }
         public string VideoDetail { get; set; }
     }
