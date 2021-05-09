@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using VideoBrowser.Itf;
+using VideoBrowser.Itf.Client.Data;
 
-namespace VideoBrowser.Client
+namespace VideoBrowser.Client.Data
 {
     public class VideoDataBuilder : IVideoDataBuilder
     {

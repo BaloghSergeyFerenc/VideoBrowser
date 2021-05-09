@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace VideoBrowser.Itf
+namespace VideoBrowser.Itf.Client.Data
 {
     public interface IVideoDataBuilder
     {

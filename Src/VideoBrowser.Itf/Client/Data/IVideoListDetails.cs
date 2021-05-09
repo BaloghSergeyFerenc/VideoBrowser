@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Itf
+﻿namespace VideoBrowser.Itf.Client.Data
 {
     public enum EPageingState
     {

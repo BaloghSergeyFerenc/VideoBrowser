@@ -16,14 +16,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VideoBrowser.Client;
-using VideoBrowser.Itf;
+using VideoBrowser.Client.Data;
+using VideoBrowser.Common;
+using VideoBrowser.Itf.Client.Data;
+using VideoBrowser.Itf.Common;
 
 namespace VideoBrowser.App
 {
     public partial class MainWindow : Window
     {
         #region Fields
+        private const string m_LogSource = "VideoBrowser.App.MainWindow";
         private IVideoDataBuilder m_VideoDataBuilder = new VideoDataBuilder();
+        private ILogger m_Logger = new BasicLogger();
         private IVideoData CurrentVideoData { get; set; }
         private ObservableCollection<IVideoItem> VideoList { get; set; }
         #endregion Fields
@@ -33,6 +38,14 @@ namespace VideoBrowser.App
         {
             InitializeComponent();
             this.ListBoxConverter.DataContext = this;
+            try
+            {
+                throw new ArgumentException();
+            }
+            catch(ArgumentException e)
+            {
+                m_Logger.Log(m_LogSource, "Init", e);
+            }
         }
 
         #endregion Public
@@ -40,6 +53,7 @@ namespace VideoBrowser.App
         #region Buttons
         private async void LoadButton(object sender, RoutedEventArgs args)
         {
+            m_Logger.Log(m_LogSource, "Load Button pressed.");
             if(CurrentVideoData != null)
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Reload;
@@ -52,6 +66,7 @@ namespace VideoBrowser.App
 
         private async void NextButton(object sender, RoutedEventArgs args)
         {
+            m_Logger.Log(m_LogSource, "Next Button pressed.");
             if(CurrentVideoData != null)
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Next;
@@ -64,6 +79,7 @@ namespace VideoBrowser.App
 
         private async void PreviousButton(object sender, RoutedEventArgs args)
         {
+            m_Logger.Log(m_LogSource, "Previous Button pressed.");
             if (CurrentVideoData != null)
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Previous;

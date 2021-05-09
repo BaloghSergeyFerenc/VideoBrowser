@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VideoBrowser.Itf
+namespace VideoBrowser.Itf.Client.Data
 {
     public interface IVideoData
     {

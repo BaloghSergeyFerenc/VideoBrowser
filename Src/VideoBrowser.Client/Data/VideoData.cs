@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using VideoBrowser.Itf;
+using VideoBrowser.Itf.Client.Data;
 
-namespace VideoBrowser.Client
+namespace VideoBrowser.Client.Data
 {
     class VideoData : IVideoData
     {
