@@ -44,10 +44,11 @@
         <!--MENU-->
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource MenuPanel}">
             <Button Style="{StaticResource LoadButton}" Click="LoadButton">Load</Button>
+            <TextBlock Style="{StaticResource MenuTextBlock}">Filters:</TextBlock>
             <ComboBox Style="{StaticResource FilterCombobox}">
                 <ComboBoxItem IsSelected="True">All</ComboBoxItem>
-                <ComboBoxItem>Some</ComboBoxItem>
-                <ComboBoxItem>Any</ComboBoxItem>
+                <ComboBoxItem>Less than 10 min</ComboBoxItem>
+                <ComboBoxItem>More than 10 min</ComboBoxItem>
             </ComboBox>
         </StackPanel>
 

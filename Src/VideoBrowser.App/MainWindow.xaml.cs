@@ -25,7 +25,7 @@ namespace VideoBrowser.App
         #region Fields
         private IVideoDataBuilder m_VideoDataBuilder = new VideoDataBuilder();
         private IVideoData CurrentVideoData { get; set; }
-        private IList<IVideoItem> VideoList { get; set; }
+        private ObservableCollection<IVideoItem> VideoList { get; set; }
         #endregion Fields
 
         #region Public
@@ -45,7 +45,7 @@ namespace VideoBrowser.App
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Reload;
             }
             CurrentVideoData =  await m_VideoDataBuilder.BuildList(CurrentVideoData);
-            VideoList = CurrentVideoData.VideoItems;
+            VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
             PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
             ListBoxConverter.ItemsSource = VideoList;
         }
@@ -56,7 +56,7 @@ namespace VideoBrowser.App
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Next;
                 CurrentVideoData = await m_VideoDataBuilder.BuildList(CurrentVideoData);
-                VideoList = CurrentVideoData.VideoItems;
+                VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
                 PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
                 ListBoxConverter.ItemsSource = VideoList;
             }
@@ -68,18 +68,11 @@ namespace VideoBrowser.App
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Previous;
                 CurrentVideoData = await m_VideoDataBuilder.BuildList(CurrentVideoData);
-                VideoList = CurrentVideoData.VideoItems;
+                VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
                 PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
                 ListBoxConverter.ItemsSource = VideoList;
             }
         }
         #endregion Buttons
-
-        #region Private
-        private void LoadListItems()
-        {
-
-        }
-        #endregion Private
     }
 }

@@ -5,7 +5,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--BASIC BUTTON-->
-        <Style x:Key="BasicButton" TargetType="Button">
+        <Style
+            x:Key="BasicButton"
+            TargetType="Button">
             <Setter Property="Width" Value="100" />
             <Setter Property="Height" Value="30" />
             <Setter Property="BorderThickness" Value="5" />
@@ -13,6 +15,17 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="5,5,5,5" />
+        </Style>
+
+        <!--BASIC TEXTBLOCK-->
+        <Style
+            x:Key="BasicTextBlock"
+            TargetType="TextBlock">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Margin" Value="10,7,10,7" />
         </Style>
 
         <!--LOAD BUTTON-->
@@ -50,13 +63,11 @@
         </Style>
 
         <!--PAGERINFO TEXTBLOCK-->
-        <Style x:Key="PagerInfo" TargetType="TextBlock">
-            <Setter Property="Width" Value="300"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Style
+            x:Key="PagerInfo"
+            TargetType="TextBlock"
+            BasedOn="{StaticResource BasicTextBlock}">
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="10,7,10,7" />
             <Setter Property="Foreground">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -69,8 +80,28 @@
             </Setter>
         </Style>
 
+        <!--MENU TEXTBLOCK-->
+        <Style
+            x:Key="MenuTextBlock"
+            TargetType="TextBlock"
+            BasedOn="{StaticResource BasicTextBlock}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#e329dd" />
+                            <GradientStop Offset="1.0" Color="#705b70" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!--FILTER COMBOBOX-->
-        <Style x:Key="FilterCombobox" TargetType="ComboBox">
+        <Style
+            x:Key="FilterCombobox"
+            TargetType="ComboBox">
             <Setter Property="Width" Value="100" />
             <Setter Property="Height" Value="Auto" />
             <Setter Property="Margin" Value="5,5,5,5" />
@@ -82,13 +113,17 @@
         </Style>
 
         <!--MENUPANEL STACKPANEL-->
-        <Style x:Key="MenuPanel" TargetType="StackPanel">
+        <Style
+            x:Key="MenuPanel"
+            TargetType="StackPanel">
             <Setter Property="Orientation" Value="Vertical" />
             <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
 
         <!--PAGERPANEL STACKPANEL-->
-        <Style x:Key="PagerPanel" TargetType="StackPanel">
+        <Style
+            x:Key="PagerPanel"
+            TargetType="StackPanel">
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="Height" Value="40" />
             <Setter Property="Width" Value="Auto" />
