@@ -52,7 +52,6 @@
     <Compile Include="Http\Dtos\GetPaginatedListDto.cs" />
     <Compile Include="Http\Dtos\PaginationDto.cs" />
     <Compile Include="Http\VideoSourceConnector.cs" />
-    <Compile Include="Http\OldVideoSourceConnector.cs" />
     <Compile Include="Http\Dtos\GetVideoListDataDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\VideoItem.cs" />

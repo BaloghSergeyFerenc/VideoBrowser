@@ -6,10 +6,10 @@ namespace VideoBrowser.Client.Data
 {
     public class VideoListContentController : IVideoListContentController
     {
-        private OldVideoSourceConnector m_HttpService;
+        private VideoSourceConnector m_VideoSource;
         public VideoListContentController()
         {
-            m_HttpService = new OldVideoSourceConnector();
+            m_VideoSource = new VideoSourceConnector();
         }
 
         public async Task<IVideoContent> UpdateVideoList(IVideoContent current)
@@ -33,7 +33,7 @@ namespace VideoBrowser.Client.Data
             if(current.VideoListDetails.CurrentPage < current.VideoListDetails.AllPages)
             {
                 current.VideoItems.Clear();
-                await m_HttpService.GetVideoDataList(current);
+                await m_VideoSource.GetNextVideoDataList(current);
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -44,7 +44,7 @@ namespace VideoBrowser.Client.Data
             if (current.VideoListDetails.CurrentPage > 1)
             {
                 current.VideoItems.Clear();
-                await m_HttpService.GetVideoDataList(current);
+                await m_VideoSource.GetPreviousVideoDataList(current);
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -53,7 +53,7 @@ namespace VideoBrowser.Client.Data
         private async Task<IVideoContent> LoadInitialVideoData(IVideoContent current)
         {
             current = new VideoContent();
-            await m_HttpService.GetVideoDataList(current);
+            await m_VideoSource.GetInitialVideoDataList(current);
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
         }
