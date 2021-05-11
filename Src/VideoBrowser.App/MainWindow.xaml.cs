@@ -41,9 +41,16 @@ namespace VideoBrowser.App
         {
             InitializeComponent();
             this.ListBoxConverter.DataContext = this;
-            m_Kernel = GetKernel();
-            m_VideoListContentController = m_Kernel.Get<IVideoListContentController>();
-            m_Logger = m_Kernel.Get<ILogger>();
+            try
+            {
+                m_Kernel = GetKernel();
+                m_VideoListContentController = m_Kernel.Get<IVideoListContentController>();
+                m_Logger = m_Kernel.Get<ILogger>();
+            }
+            catch //Initialization issue: missing config file?
+            {
+                this.Close();
+            }
         }
 
         #endregion Public
