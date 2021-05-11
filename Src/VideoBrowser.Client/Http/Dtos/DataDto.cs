@@ -2,7 +2,7 @@
 
 namespace VideoBrowser.Client.Http.Dtos
 {
-    class DataDto
+    internal class DataDto
     {
         public IEnumerable<GetVideoListDataDto> videos { get; set; }
         public PaginationDto pagination { get; set; }

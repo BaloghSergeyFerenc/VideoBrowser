@@ -1,6 +1,6 @@
 ﻿namespace VideoBrowser.Client.Http.Dtos
 {
-    class GetPaginatedListDto
+    internal class GetPaginatedListDto
     {
         public bool success { get; set; }
         public string status { get; set; }

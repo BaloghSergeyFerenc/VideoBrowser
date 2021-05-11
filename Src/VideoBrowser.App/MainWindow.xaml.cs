@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -27,8 +28,10 @@ namespace VideoBrowser.App
     {
         #region Fields
         private const string m_LogSource = "VideoBrowser.App.MainWindow";
-        private IVideoListContentController m_VideoDataBuilder = new VideoListContentController();
-        private ILogger m_Logger = new BasicLogger();
+        private StandardKernel m_Kernel;
+        private IVideoListContentController m_VideoListContentController;
+        private ILogger m_Logger;
+
         private IVideoContent CurrentVideoData { get; set; }
         private ObservableCollection<IVideoItem> VideoList { get; set; }
         #endregion Fields
@@ -38,6 +41,9 @@ namespace VideoBrowser.App
         {
             InitializeComponent();
             this.ListBoxConverter.DataContext = this;
+            m_Kernel = GetKernel();
+            m_VideoListContentController = m_Kernel.Get<IVideoListContentController>();
+            m_Logger = m_Kernel.Get<ILogger>();
         }
 
         #endregion Public
@@ -50,7 +56,7 @@ namespace VideoBrowser.App
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Reload;
             }
-            CurrentVideoData =  await m_VideoDataBuilder.UpdateVideoList(CurrentVideoData);
+            CurrentVideoData =  await m_VideoListContentController.UpdateVideoList(CurrentVideoData);
             VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
             PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
             ListBoxConverter.ItemsSource = VideoList;
@@ -62,7 +68,7 @@ namespace VideoBrowser.App
             if(CurrentVideoData != null)
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Next;
-                CurrentVideoData = await m_VideoDataBuilder.UpdateVideoList(CurrentVideoData);
+                CurrentVideoData = await m_VideoListContentController.UpdateVideoList(CurrentVideoData);
                 VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
                 PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
                 ListBoxConverter.ItemsSource = VideoList;
@@ -75,12 +81,22 @@ namespace VideoBrowser.App
             if (CurrentVideoData != null)
             {
                 CurrentVideoData.VideoListDetails.PageingState = EPageingState.Previous;
-                CurrentVideoData = await m_VideoDataBuilder.UpdateVideoList(CurrentVideoData);
+                CurrentVideoData = await m_VideoListContentController.UpdateVideoList(CurrentVideoData);
                 VideoList = new ObservableCollection<IVideoItem>(CurrentVideoData.VideoItems);
                 PagerInfoText.Text = CurrentVideoData.VideoListDetails.PagerInfoText;
                 ListBoxConverter.ItemsSource = VideoList;
             }
         }
         #endregion Buttons
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            m_Kernel.Dispose();
+        }
+
+        private StandardKernel GetKernel()
+        {
+            return new StandardKernel(new ClientModule(), new CommonModule());
+        }
     }
 }

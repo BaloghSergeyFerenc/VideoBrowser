@@ -2,7 +2,7 @@
 
 namespace VideoBrowser.Client.Data
 {
-    class VideoItem : IVideoItem
+    internal class VideoItem : IVideoItem
     {
         public string VideoId { get; set; }
         public string VideoTitle { get; set; }

@@ -4,12 +4,16 @@ using VideoBrowser.Itf.Client.Data;
 
 namespace VideoBrowser.Client.Data
 {
-    public class VideoListContentController : IVideoListContentController
+    internal class VideoListContentController : IVideoListContentController
     {
-        private VideoSourceConnector m_VideoSource;
-        public VideoListContentController()
+        #region Fields
+        private IVideoSourceConnector _VideoSource;
+        #endregion Fields
+
+        #region Public
+        public VideoListContentController(IVideoSourceConnector videoSourceConnector)
         {
-            m_VideoSource = new VideoSourceConnector();
+            _VideoSource = videoSourceConnector;
         }
 
         public async Task<IVideoContent> UpdateVideoList(IVideoContent current)
@@ -19,7 +23,9 @@ namespace VideoBrowser.Client.Data
                 await LoadInitialVideoData(current) :
                 await UpdateVideoData(current);
         }
+        #endregion Public
 
+        #region Private
         private async Task<IVideoContent> UpdateVideoData(IVideoContent current)
         {
             return
@@ -30,10 +36,10 @@ namespace VideoBrowser.Client.Data
 
         private async Task<IVideoContent> LoadNextPage(IVideoContent current)
         {
-            if(current.VideoListDetails.CurrentPage < current.VideoListDetails.AllPages)
+            if (current.VideoListDetails.CurrentPage < current.VideoListDetails.AllPages)
             {
                 current.VideoItems.Clear();
-                await m_VideoSource.GetNextVideoDataList(current);
+                await _VideoSource.GetNextVideoDataList(current);
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -44,7 +50,7 @@ namespace VideoBrowser.Client.Data
             if (current.VideoListDetails.CurrentPage > 1)
             {
                 current.VideoItems.Clear();
-                await m_VideoSource.GetPreviousVideoDataList(current);
+                await _VideoSource.GetPreviousVideoDataList(current);
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -53,9 +59,10 @@ namespace VideoBrowser.Client.Data
         private async Task<IVideoContent> LoadInitialVideoData(IVideoContent current)
         {
             current = new VideoContent();
-            await m_VideoSource.GetInitialVideoDataList(current);
+            await _VideoSource.GetInitialVideoDataList(current);
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
         }
+        #endregion Private
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace VideoBrowser.Client.Http.Dtos
 {
-    class PaginationDto
+    internal class PaginationDto
     {
         public int total { get; set; }
         public int count { get; set; }

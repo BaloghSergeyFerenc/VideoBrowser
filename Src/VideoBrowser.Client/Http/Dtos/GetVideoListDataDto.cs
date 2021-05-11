@@ -1,6 +1,6 @@
 ﻿namespace VideoBrowser.Client.Http.Dtos
 {
-    class GetVideoListDataDto
+    internal class GetVideoListDataDto
     {
         public string id { get; set; }
         public string profileImage { get; set; }

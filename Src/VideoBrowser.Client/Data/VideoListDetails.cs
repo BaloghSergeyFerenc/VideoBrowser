@@ -2,7 +2,7 @@
 
 namespace VideoBrowser.Client.Data
 {
-    class VideoListDetails : IVideoListDetails
+    internal class VideoListDetails : IVideoListDetails
     {
         public int CurrentPage { get; set; } = 1;
         public int AllPages { get; set; } = 1;

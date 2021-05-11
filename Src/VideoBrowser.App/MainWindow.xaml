@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoBrowser.App"
         mc:Ignorable="d"
-        Title="Video Browser" Height="900" Width="1200">
+        Title="Video Browser" Height="900" Width="1200"
+        Closing="Window_Closing">
 
     <!--WINDOW-->
     <Window.Resources>

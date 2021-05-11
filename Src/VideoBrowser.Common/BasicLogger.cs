@@ -5,10 +5,14 @@ using VideoBrowser.Itf.Common;
 
 namespace VideoBrowser.Common
 {
-    public class BasicLogger : ILogger
+    internal class BasicLogger : ILogger
     {
+        #region Fields
         private string m_LogPath;
-        private StringBuilder m_LogEntryBuilder;
+        private StringBuilder _LogEntryBuilder;
+        #endregion Fields
+
+        #region Public
         public BasicLogger()
         {
             m_LogPath = $"{Path.GetTempPath()}\\DocklerVideoBrowser\\";
@@ -16,9 +20,9 @@ namespace VideoBrowser.Common
             {
                 Directory.CreateDirectory(m_LogPath);
             }
-            m_LogEntryBuilder = new StringBuilder();
+            _LogEntryBuilder = new StringBuilder();
             m_LogPath = Path.Combine(m_LogPath, "VbaLogs.txt");
-            if(File.Exists(m_LogPath))
+            if (File.Exists(m_LogPath))
             {
                 File.Delete(m_LogPath);
             }
@@ -27,15 +31,16 @@ namespace VideoBrowser.Common
         public void Log(string logSource, string message, Exception e = null)
         {
             string dateTime = $"{DateTime.Now.ToShortDateString().Replace(" ", "")}-{DateTime.Now.ToShortTimeString().Replace(" ", "")}";
-            m_LogEntryBuilder.Append($">>>{logSource} --- {dateTime} --- {message} {Environment.NewLine}");
+            _LogEntryBuilder.Append($">>>{logSource} --- {dateTime} --- {message} {Environment.NewLine}");
             if (e != null)
             {
-                m_LogEntryBuilder.AppendLine($"EXCEPTION: {e.Message}");
-                m_LogEntryBuilder.Append(e.StackTrace);
+                _LogEntryBuilder.AppendLine($"EXCEPTION: {e.Message}");
+                _LogEntryBuilder.Append(e.StackTrace);
             }
-            m_LogEntryBuilder.AppendLine();
-            File.AppendAllText(m_LogPath, m_LogEntryBuilder.ToString());
-            m_LogEntryBuilder.Clear();
+            _LogEntryBuilder.AppendLine();
+            File.AppendAllText(m_LogPath, _LogEntryBuilder.ToString());
+            _LogEntryBuilder.Clear();
         }
+        #endregion Public
     }
 }
