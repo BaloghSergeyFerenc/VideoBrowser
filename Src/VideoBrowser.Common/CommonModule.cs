@@ -8,6 +8,7 @@ namespace VideoBrowser.Common
         public override void Load()
         {
             Bind<ILogger>().To(typeof(BasicLogger)).InSingletonScope();
+            Bind<IEnvironmentInitializer>().To(typeof(EnvironmentInitializer)).InSingletonScope();
         }
     }
 }

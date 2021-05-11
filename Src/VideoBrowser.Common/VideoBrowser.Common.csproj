@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BasicLogger.cs" />
     <Compile Include="CommonModule.cs" />
+    <Compile Include="EnvironmentInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

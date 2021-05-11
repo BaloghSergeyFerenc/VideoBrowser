@@ -16,7 +16,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{Binding VideoId,Converter={StaticResource VideoImageConverter}}" Name="ImageName" Height="100" Width="100" Canvas.Left="10" Canvas.Top="10"></Image>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding VideoTitle}" Canvas.Left="150" Canvas.Top="5" Width="500" Margin="30,0,0,0"/>
+                        <TextBlock Text="{Binding VideoTitle}" Canvas.Left="150" Canvas.Top="5" Width="500" Margin="30,0,0,0" Background="LightPink" />
                         <TextBlock Text="{Binding VideoDetail}" Canvas.Left="150" Canvas.Top="25" Width="500" Margin="30,0,0,0"/>
                     </StackPanel>
                 </StackPanel>

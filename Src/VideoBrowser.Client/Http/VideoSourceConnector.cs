@@ -15,18 +15,22 @@ namespace VideoBrowser.Client.Http
         #region Fileds
         private const string f_LogSource = "VideoBrowser.Client.VideoSourceConnector";
         private ulong f_Counter = 0;
-        private const string f_RequestUriPart = "list?psid=Guest13&pstool=421_1&accessKey=300657b0409c3a36ad8c16387e75f417&ms_notrack=1&program=revs&campaign_id=&type=&site=jasmin&sexualOrientation=straight&forcedPerformers=&limit=25&primaryColor=%238AC437&labelColor=%23212121&clientIp=172.26.32.1";
-        private const string f_ApiUrl = @"https://pt.potwm.com/api/video-promotion/v1/";
+        private string f_RequestUriPart = "";
+        private string f_ApiUrl = "";
 
         private ILogger _Logger;
+        private IEnvironmentInitializer _EnvironmentInitializer;
         private HttpClient _ListHttpClient;
         private HttpClient _ImgHttpClient;
         #endregion Fileds
 
         #region Public
-        public VideoSourceConnector(ILogger logger, HttpClient listHttpClient, HttpClient imgHttpClient)
+        public VideoSourceConnector(ILogger logger, IEnvironmentInitializer environmentInitializer, HttpClient listHttpClient, HttpClient imgHttpClient)
         {
             _Logger = logger;
+            _EnvironmentInitializer = environmentInitializer;
+            f_ApiUrl = environmentInitializer.GetApiUrl();
+            f_RequestUriPart = environmentInitializer.GetRequestUri();
             _ListHttpClient = listHttpClient;
             _ImgHttpClient = imgHttpClient;
             _ListHttpClient.BaseAddress = new Uri(f_ApiUrl);
@@ -87,7 +91,7 @@ namespace VideoBrowser.Client.Http
                 current.VideoItems.Add(new VideoItem()
                 {
                     VideoTitle = item.title,
-                    VideoDetail = $"{item.uploader} {item.duration} {item.quality}",
+                    VideoDetail = $"Source: {item.uploader}, Durration: {item.duration} sec, Quality: {item.quality}",
                     VideoId = imgFileName
                 });
                 File.WriteAllBytes(imgPath, cont);
