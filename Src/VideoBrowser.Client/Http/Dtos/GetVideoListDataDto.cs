@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Client.Http
+﻿namespace VideoBrowser.Client.Http.Dtos
 {
     class GetVideoListDataDto
     {

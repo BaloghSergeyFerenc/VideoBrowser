@@ -3,7 +3,7 @@ using VideoBrowser.Itf.Client.Data;
 
 namespace VideoBrowser.Client.Data
 {
-    class VideoData : IVideoData
+    class VideoContent : IVideoContent
     {
         public IList<IVideoItem> VideoItems { get; } = new List<IVideoItem>();
 

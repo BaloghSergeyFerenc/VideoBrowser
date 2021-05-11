@@ -1,22 +1,20 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using VideoBrowser.Client.Data;
+using VideoBrowser.Client.Http.Dtos;
 using VideoBrowser.Itf.Client.Data;
 
 namespace VideoBrowser.Client.Http
 {
-    class Fake2
+    class OldVideoSourceConnector
     {
         HttpClient m_ListHttpClient;
         HttpClient m_ImgHttpClient;
 
-        public Fake2()
+        public OldVideoSourceConnector()
         {
             m_ListHttpClient = new HttpClient();
             m_ListHttpClient.BaseAddress = new Uri(@"https://pt.potwm.com/api/video-promotion/v1/");
@@ -27,7 +25,7 @@ namespace VideoBrowser.Client.Http
             }
         }
 
-        public async Task<IVideoData> GetVideoDataList(IVideoData current)
+        public async Task<IVideoContent> GetVideoDataList(IVideoContent current)
         {
             try
             {
@@ -35,7 +33,7 @@ namespace VideoBrowser.Client.Http
                 HttpResponseMessage response = await m_ListHttpClient.SendAsync(request);
                 string content = await response.Content.ReadAsStringAsync();
 
-                PaginatedList videoListDataDtos = JsonConvert.DeserializeObject<PaginatedList>(content);
+                GetPaginatedListDto videoListDataDtos = JsonConvert.DeserializeObject<GetPaginatedListDto>(content);
 
                 foreach (GetVideoListDataDto item in videoListDataDtos.data.videos)
                 {
@@ -53,7 +51,6 @@ namespace VideoBrowser.Client.Http
                 }
                 current.VideoListDetails.CurrentPage = videoListDataDtos.data.pagination.currentPage;
                 current.VideoListDetails.AllPages = videoListDataDtos.data.pagination.totalPages;
-                //current.VideoListDetails.PageingState = EPageingState.None;
             }
             catch (Exception e)
             {
@@ -68,28 +65,5 @@ namespace VideoBrowser.Client.Http
                 input.Substring(input.LastIndexOf("/") + 1)
                     .Substring(0, input.Substring(input.LastIndexOf("/") + 1).LastIndexOf("?"));
         }
-    }
-
-    class PaginatedList
-    {
-        public bool success { get; set; }
-        public string status { get; set; }
-        public Data data { get; set; }
-
-    }
-
-    class Data
-    {
-        public IEnumerable<GetVideoListDataDto> videos { get; set; }
-        public Pagination pagination { get; set; }
-    }
-
-    class Pagination
-    {
-        public int total { get; set; }
-        public int count { get; set; }
-        public int perPage { get; set; }
-        public int currentPage { get; set; }
-        public int totalPages { get; set; }
     }
 }

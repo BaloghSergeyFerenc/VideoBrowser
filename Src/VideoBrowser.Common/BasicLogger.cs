@@ -11,7 +11,7 @@ namespace VideoBrowser.Common
         private StringBuilder m_LogEntryBuilder;
         public BasicLogger()
         {
-            m_LogPath = Path.Combine(Environment.CurrentDirectory, "Logs");
+            m_LogPath = $"{Path.GetTempPath()}\\DocklerVideoBrowser\\";
             if (!Directory.Exists(m_LogPath))
             {
                 Directory.CreateDirectory(m_LogPath);

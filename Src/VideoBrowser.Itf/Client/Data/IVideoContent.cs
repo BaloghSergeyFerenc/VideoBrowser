@@ -2,7 +2,7 @@
 
 namespace VideoBrowser.Itf.Client.Data
 {
-    public interface IVideoData
+    public interface IVideoContent
     {
         IList<IVideoItem> VideoItems { get; }
         IVideoListDetails VideoListDetails { get; }
