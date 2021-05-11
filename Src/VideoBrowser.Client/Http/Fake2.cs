@@ -11,15 +11,15 @@ using VideoBrowser.Itf.Client.Data;
 
 namespace VideoBrowser.Client.Http
 {
-    class Fake
+    class Fake2
     {
         HttpClient m_ListHttpClient;
         HttpClient m_ImgHttpClient;
 
-        public Fake()
+        public Fake2()
         {
             m_ListHttpClient = new HttpClient();
-            m_ListHttpClient.BaseAddress = new Uri(@"https://localhost:44313/api/");
+            m_ListHttpClient.BaseAddress = new Uri(@"https://pt.potwm.com/api/video-promotion/v1/");
             m_ImgHttpClient = new HttpClient();
             if (!Directory.Exists(Path.Combine(Path.GetTempPath(), "DocklerVideoBrowser")))
             {
@@ -31,7 +31,7 @@ namespace VideoBrowser.Client.Http
         {
             try
             {
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "videos");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "list?psid=Guest13&pstool=421_1&accessKey=300657b0409c3a36ad8c16387e75f417&ms_notrack=1&program=revs&campaign_id=&type=&site=jasmin&sexualOrientation=straight&forcedPerformers=&limit=25&primaryColor=%238AC437&labelColor=%23212121&clientIp=172.26.32.1");
                 HttpResponseMessage response = await m_ListHttpClient.SendAsync(request);
                 string content = await response.Content.ReadAsStringAsync();
 
@@ -39,9 +39,9 @@ namespace VideoBrowser.Client.Http
 
                 foreach (GetVideoListDataDto item in videoListDataDtos.data.videos)
                 {
-                    HttpResponseMessage c = await m_ImgHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, new Uri($"http:{item.profileImage}")));
+                    HttpResponseMessage c = await m_ImgHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, new Uri($"https:{item.profileImage}")));
                     byte[] cont = await c.Content.ReadAsByteArrayAsync();
-                    string imgFileName = item.profileImage.Substring(item.profileImage.LastIndexOf("/") + 1);
+                    string imgFileName = MineImgFileName(item.profileImage);
                     string imgPath = Path.Combine(Path.GetTempPath(), "DocklerVideoBrowser", imgFileName);
                     current.VideoItems.Add(new VideoItem()
                     {
@@ -51,6 +51,9 @@ namespace VideoBrowser.Client.Http
                     });
                     File.WriteAllBytes(imgPath, cont);
                 }
+                current.VideoListDetails.CurrentPage = videoListDataDtos.data.pagination.currentPage;
+                current.VideoListDetails.AllPages = videoListDataDtos.data.pagination.totalPages;
+                //current.VideoListDetails.PageingState = EPageingState.None;
             }
             catch (Exception e)
             {
@@ -58,28 +61,35 @@ namespace VideoBrowser.Client.Http
             }
             return current;
         }
+
+        private string MineImgFileName(string input)
+        {
+            return
+                input.Substring(input.LastIndexOf("/") + 1)
+                    .Substring(0, input.Substring(input.LastIndexOf("/") + 1).LastIndexOf("?"));
+        }
     }
 
-    //class PaginatedList
-    //{
-    //    public bool success { get; set; }
-    //    public string status { get; set; }
-    //    public Data data { get; set; }
+    class PaginatedList
+    {
+        public bool success { get; set; }
+        public string status { get; set; }
+        public Data data { get; set; }
 
-    //}
+    }
 
-    //class Data
-    //{
-    //    public IEnumerable<GetVideoListDataDto> videos { get; set; }
-    //    public Pagination pagination { get; set; }
-    //}
+    class Data
+    {
+        public IEnumerable<GetVideoListDataDto> videos { get; set; }
+        public Pagination pagination { get; set; }
+    }
 
-    //class Pagination
-    //{
-    //    public int total { get; set; }
-    //    public int count { get; set; }
-    //    public int perPage { get; set; }
-    //    public int currentPage { get; set; }
-    //    public int totalPages { get; set; }
-    //}
+    class Pagination
+    {
+        public int total { get; set; }
+        public int count { get; set; }
+        public int perPage { get; set; }
+        public int currentPage { get; set; }
+        public int totalPages { get; set; }
+    }
 }

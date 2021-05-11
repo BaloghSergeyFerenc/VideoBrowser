@@ -40,9 +40,9 @@ namespace VideoBrowser.Client.Http
 
                 foreach (GetVideoListDataDto item in videoListDataDtos)
                 {
-                    HttpResponseMessage c = await m_ImgHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, new Uri($"http:{item.coverImage}")));
+                    HttpResponseMessage c = await m_ImgHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, new Uri($"http:{item.profileImage}")));
                     byte[] cont = await c.Content.ReadAsByteArrayAsync();
-                    string imgFileName = item.coverImage.Substring(item.coverImage.LastIndexOf("/") + 1);
+                    string imgFileName = item.profileImage.Substring(item.profileImage.LastIndexOf("/") + 1);
                     string imgPath = Path.Combine(Path.GetTempPath(), "DocklerVideoBrowser", imgFileName);
                     current.VideoItems.Add(new VideoItem()
                     {

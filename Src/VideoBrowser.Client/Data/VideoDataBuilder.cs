@@ -13,10 +13,12 @@ namespace VideoBrowser.Client.Data
 {
     public class VideoDataBuilder : IVideoDataBuilder
     {
-        private HttpService m_HttpService;
+        private Fake2 m_HttpService;
         public VideoDataBuilder()
         {
-            m_HttpService = new HttpService();
+            //m_HttpService = new HttpService();
+            m_HttpService = new Fake2();
+            //fake.GetVideoDataList(new VideoData());
             //Task.Run(() => new HttpService().GetVideoDataList(new VideoData()));
         }
 
@@ -52,7 +54,7 @@ namespace VideoBrowser.Client.Data
                 //        });
                 //}
                 await m_HttpService.GetVideoDataList(current);
-                current.VideoListDetails.CurrentPage++;
+                //current.VideoListDetails.CurrentPage++;
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -75,7 +77,7 @@ namespace VideoBrowser.Client.Data
                 //}
                 await m_HttpService.GetVideoDataList(current);
 
-                current.VideoListDetails.CurrentPage--;
+                //current.VideoListDetails.CurrentPage--;
             }
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
@@ -96,8 +98,8 @@ namespace VideoBrowser.Client.Data
             //}
             await m_HttpService.GetVideoDataList(current);
 
-            current.VideoListDetails.CurrentPage = 1;
-            current.VideoListDetails.AllPages = 2;
+            //current.VideoListDetails.CurrentPage = 1;
+            //current.VideoListDetails.AllPages = 2;
             current.VideoListDetails.PageingState = EPageingState.None;
             return current;
         }

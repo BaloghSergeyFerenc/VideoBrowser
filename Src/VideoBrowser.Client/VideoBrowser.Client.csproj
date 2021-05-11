@@ -49,6 +49,7 @@
     <Compile Include="Data\VideoData.cs" />
     <Compile Include="Data\VideoDataBuilder.cs" />
     <Compile Include="Http\Fake.cs" />
+    <Compile Include="Http\Fake2.cs" />
     <Compile Include="Http\GetVideoListDataDto.cs" />
     <Compile Include="Http\HttpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
